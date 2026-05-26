@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogoWEB", "CatalogoWEB\CatalogoWEB.csproj", "{AAB43A5C-C644-4740-8D9D-17554A78C15E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{0840ACAF-5DCE-454C-9DA6-05D2B0AAB8E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consultas", "Consultas\Consultas.csproj", "{C0FD403A-344E-43B7-87E0-F027CCCE91D2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAB43A5C-C644-4740-8D9D-17554A78C15E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAB43A5C-C644-4740-8D9D-17554A78C15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAB43A5C-C644-4740-8D9D-17554A78C15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAB43A5C-C644-4740-8D9D-17554A78C15E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0840ACAF-5DCE-454C-9DA6-05D2B0AAB8E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0840ACAF-5DCE-454C-9DA6-05D2B0AAB8E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0840ACAF-5DCE-454C-9DA6-05D2B0AAB8E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0840ACAF-5DCE-454C-9DA6-05D2B0AAB8E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0FD403A-344E-43B7-87E0-F027CCCE91D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0FD403A-344E-43B7-87E0-F027CCCE91D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0FD403A-344E-43B7-87E0-F027CCCE91D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0FD403A-344E-43B7-87E0-F027CCCE91D2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DECE625B-ABE5-4CDF-B553-2283764BDAC7}
+	EndGlobalSection
+EndGlobal
