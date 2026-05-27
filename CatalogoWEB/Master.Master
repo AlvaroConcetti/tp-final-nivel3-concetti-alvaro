@@ -17,7 +17,9 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <!-- Estilos del sitio -->
-    <link href="Content/catalogo.css" rel="stylesheet" />
+    <link href="Content/catalogo.css?v=5" rel="stylesheet" />
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <form id="form1" runat="server">
@@ -32,7 +34,8 @@
                 <a class="nav-link-item" href="Favoritos.aspx">
                     <i class="bi bi-heart me-1"></i>Favoritos
                 </a>
-                <%if (Consultas.Seguridad.Admin(Session["Usuario"])) {%>
+                <%if (Consultas.Seguridad.Admin(Session["Usuario"]))
+                    {%>
                 <a class="nav-link-item" href="Administracion.aspx">
                     <i class="bi bi-sliders me-1"></i>Administración
                 </a>
@@ -44,7 +47,29 @@
                 <asp:Button Text="Cerrar sesión" runat="server" ID="btnCerrarSesion"
                     CssClass="btn-ghost" Visible="false" OnClick="btnCerrarSesion_Click" />
             </div>
+            <!-- Botón hamburguesa: 3 barras que animan a X (visible sólo en ≤991px via CSS) -->
+            <button class="nav-hamburger" id="btnHamburguesa" type="button" onclick="toggleMenu()" aria-label="Abrir menú">
+                <span class="ham-bar ham-bar--top"></span>
+                <span class="ham-bar ham-bar--mid"></span>
+                <span class="ham-bar ham-bar--bot"></span>
+            </button>
         </nav>
+
+        <!-- Menú mobile: visibilidad controlada por clase CSS .is-open -->
+        <div class="nav-mobile-menu" id="navMobileMenu">
+            <a class="nav-link-item" href="Default.aspx">
+                <i class="bi bi-grid-3x3-gap me-1"></i>Catálogo
+            </a>
+            <a class="nav-link-item" href="Favoritos.aspx">
+                <i class="bi bi-heart me-1"></i>Favoritos
+            </a>
+            <%if (Consultas.Seguridad.Admin(Session["Usuario"]))
+                {%>
+            <a class="nav-link-item" href="Administracion.aspx">
+                <i class="bi bi-sliders me-1"></i>Administración
+            </a>
+            <%}%>
+        </div>
 
         <div class="main-content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
@@ -52,5 +77,21 @@
 
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('navMobileMenu');
+            var btn = document.getElementById('btnHamburguesa');
+            // .nav-open muestra el menú (tiene mayor especificidad que display:none !important)
+            // .is-open anima las barras del botón → X
+            menu.classList.toggle('nav-open');
+            btn.classList.toggle('is-open');
+        }
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 991) {
+                document.getElementById('navMobileMenu').classList.remove('nav-open');
+                document.getElementById('btnHamburguesa').classList.remove('is-open');
+            }
+        });
+    </script>
 </body>
 </html>

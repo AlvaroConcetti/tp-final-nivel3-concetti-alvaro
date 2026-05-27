@@ -112,6 +112,86 @@ button {
     flex-shrink: 0;
 }
 
+/* ── HAMBURGUESA ──
+   Siempre oculto. El bloque @media (max-width:991px) lo hace visible.
+   Se usa display:none con !important para asegurarnos que ningún otro
+   estilo lo sobreescriba en desktop. ── */
+.nav-hamburger {
+    display: none !important;
+    width: 38px;
+    height: 38px;
+    background: transparent;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-left: auto;
+    flex-shrink: 0;
+    padding: 0;
+    transition: background 0.15s, border-color 0.15s;
+}
+.nav-hamburger:hover {
+    background: var(--accent-light);
+    border-color: var(--border-strong);
+}
+
+/* Tres barras internas → animan a X con .is-open */
+.ham-bar {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.28s ease, opacity 0.22s ease;
+    transform-origin: center;
+}
+.nav-hamburger.is-open .ham-bar--top { transform: translateY(7px)  rotate(45deg); }
+.nav-hamburger.is-open .ham-bar--mid { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.is-open .ham-bar--bot { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── MENÚ MOBILE ──
+   Oculto por defecto con !important.
+   Se muestra agregando la clase .nav-open (2 clases = mayor especificidad
+   que la regla de abajo → .nav-open gana el !important). ── */
+.nav-mobile-menu {
+    display: none !important;
+}
+.nav-mobile-menu.nav-open {
+    display: flex !important;
+    flex-direction: column;
+    position: sticky;
+    top: var(--navbar-h);
+    z-index: 999;
+    width: 100%;
+    background: rgba(245, 244, 241, 0.98);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 1rem 0.75rem;
+    gap: 0.1rem;
+    animation: menuSlideDown 0.22s ease forwards;
+}
+@keyframes menuSlideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.nav-mobile-menu .nav-link-item {
+    font-size: 14.5px;
+    font-weight: 400;
+    padding: 0.7rem 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    border-radius: var(--radius-sm);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+.nav-mobile-menu .nav-link-item:last-child { border-bottom: none; }
+.nav-mobile-menu .nav-link-item:hover {
+    background: var(--accent-light);
+    color: var(--text-primary);
+}
+
 /* ── BOTONES ── */
 .btn-primary,
 input[type="submit"].btn-primary {
@@ -199,7 +279,6 @@ input[type="submit"].btn-danger-soft {
     border-color: var(--danger) !important;
 }
 
-/* Botón secundario (cancelar) */
 .btn-secondary,
 input[type="submit"].btn-secondary {
     background: var(--surface-raised) !important;
@@ -220,7 +299,6 @@ input[type="submit"].btn-secondary {
     color: var(--text-primary) !important;
 }
 
-/* Botón dentro de GridView */
 .btn-select {
     background: transparent !important;
     border: 1.5px solid var(--border) !important;
@@ -271,6 +349,30 @@ input[type="submit"].btn-secondary {
     margin: 0;
 }
 
+.btnFavorito {
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+.btnFavorito i {
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+.btnFavorito:hover {
+    transform: scale(1.15);
+}
+.btnFavorito:hover i {
+    color: #e03131;
+}
+.btnFavorito i.fav-activo {
+    color: #e03131;
+}
+
 /* ── SEARCH BAR ── */
 .search-bar {
     display: flex;
@@ -281,7 +383,8 @@ input[type="submit"].btn-secondary {
 }
 .search-bar .form-control {
     max-width: 300px;
-    flex-shrink: 0;
+    flex: 1;
+    min-width: 140px;
 }
 
 /* ── CATALOG CARDS ── */
@@ -367,12 +470,34 @@ input[type="submit"].btn-secondary {
 }
 
 /* ── TABLAS ── */
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    /* overflow:hidden recorta el contenido en las esquinas redondeadas */
+    overflow: hidden;
+    /* overflow-x:auto sobre-escribe sólo el eje X → scroll horizontal cuando hace falta */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+/* Scrollbar delgado y estilizado */
+.panel::-webkit-scrollbar        { height: 5px; }
+.panel::-webkit-scrollbar-track  { background: var(--surface-raised); }
+.panel::-webkit-scrollbar-thumb  { background: var(--border-strong); border-radius: 3px; }
+.panel::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* .panel-scroll ya no se usa como wrapper de scroll,
+   se mantiene por compatibilidad pero sin overflow */
+.panel-scroll { width: 100%; }
+
 .table {
     border-collapse: separate;
     border-spacing: 0;
     font-size: 13.5px;
     width: 100%;
     margin: 0 !important;
+    /* Ancho mínimo: fuerza scroll horizontal en viewports angostos */
+    min-width: 620px;
 }
 .table thead th {
     font-size: 10.5px;
@@ -437,7 +562,6 @@ input[type="submit"].btn-secondary {
     display: block;
 }
 
-/* Validators de ASP.NET con ForeColor=Red */
 span[style*="color:Red"],
 span[style*="color: Red"],
 span[style*="color:red"] {
@@ -453,7 +577,6 @@ span[style*="color:red"] {
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    /* compensa el padding del main-content */
     margin: -2.5rem -2rem;
 }
 
@@ -507,14 +630,6 @@ span[style*="color:red"] {
     color: var(--text-secondary);
 }
 
-/* ── PANEL / SURFACE CARD ── */
-.panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
 /* ── FILTRO AVANZADO ── */
 .filter-bar {
     background: var(--surface-raised);
@@ -525,6 +640,14 @@ span[style*="color:red"] {
 }
 .filter-bar .form-label {
     margin-bottom: 0.25rem;
+}
+/* FIX responsive: columnas del filtro avanzado apilan en mobile */
+.filter-bar .row {
+    flex-wrap: wrap;
+}
+.filter-bar .col-auto {
+    flex: 1 1 140px;
+    min-width: 120px;
 }
 
 /* ── ESTADO VACÍO ── */
@@ -564,14 +687,64 @@ span[style*="color:red"] {
     color: var(--text-secondary);
 }
 
+/* ── DETALLE: título responsive ── */
+.detalle-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.75rem;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
 /* ── RESPONSIVE ── */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
+
+    /* Navbar mobile: ocultar links de escritorio, mostrar hamburguesa */
     .site-nav {
         padding: 0 1rem;
         gap: 1rem;
     }
-    .nav-links { display: none; }
+    .nav-divider { display: none !important; }
+    .nav-links   { display: none !important; }
+    .nav-actions { margin-left: 0; }
+
+    /* Mostrar hamburguesa — !important necesario para pisar el none !important del default */
+    .nav-hamburger {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    /* Layout */
     .main-content { padding: 1.5rem 1rem; }
-    .auth-wrapper { margin: -1.5rem -1rem; }
+    .auth-wrapper { margin: -1.5rem -1rem; padding: 1.5rem 1rem; }
+
+    /* Page header */
     .page-header { flex-direction: column; align-items: flex-start; }
+
+    /* Search bar: input ocupa toda la fila */
+    .search-bar .form-control {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Detalle: título más chico */
+    .detalle-titulo { font-size: 1.5rem; }
+
+    /* Auth card: menos padding en pantallas chicas */
+    .auth-card { padding: 1.5rem; }
+
+    /* Filtro avanzado: cada campo ocupa su fila */
+    .filter-bar .col-auto {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title { font-size: 1.5rem; }
+    .catalog-card img { height: 200px; }
 }

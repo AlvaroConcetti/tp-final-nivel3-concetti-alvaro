@@ -46,9 +46,10 @@ namespace CatalogoWEB
                     Response.Redirect("Error.aspx", false);
                 }
 
-                if (Request.QueryString["id"] != null)
+                if (Request.QueryString["Id"] != null)
                 {
                     btnAceptar.Text = "Editar";
+                    btnEliminar.Visible = true;
 
                     int idArticulo = int.Parse(Request.QueryString["id"]);
                     List<Articulo> articulos = consultasCatalogo.ListarArticulo();
@@ -78,12 +79,23 @@ namespace CatalogoWEB
         {
             try
             {
-                Page.Validate();
-                if (!Page.IsValid)
-                    return;
+                    Page.Validate();
+                    if (!Page.IsValid)
+                        return;
 
                 Articulo articuloNuevo = new Articulo();
-                articuloNuevo.Precio = decimal.Parse(txtBoxPrecio.Text);
+
+                try
+                {
+                    articuloNuevo.Precio = decimal.Parse(txtBoxPrecio.Text);
+                }
+                catch (Exception)
+                {
+                    Session.Add("Error", "El precio tiene un formato inválido.");
+                    Response.Redirect("Error.aspx", false);
+                    return;
+                }
+
                 articuloNuevo.Nombre = txtBoxNombre.Text;
                 articuloNuevo.Descripcion = txtBoxDescripcion.Text;
                 articuloNuevo.Marca = new Marca();
@@ -104,9 +116,9 @@ namespace CatalogoWEB
                     articuloNuevo.UrlImagen = string.Empty;
                 }
 
-                if (Request.QueryString["id"] != null)
+                if (Request.QueryString["Id"] != null)
                 {
-                    articuloNuevo.Id = int.Parse(Request.QueryString["id"]);
+                    articuloNuevo.Id = int.Parse(Request.QueryString["Id"]);
                     consultasArticulo.ModificarArticulo(articuloNuevo);
                 }
                 else

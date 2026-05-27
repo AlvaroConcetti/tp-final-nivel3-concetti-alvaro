@@ -14,11 +14,26 @@ namespace CatalogoWEB
         protected void Page_Load(object sender, EventArgs e)
         {
             ArticuloSeleccionado = (Articulo)Session["ArticuloSeleccionado"];
+            if ((string)Session["Origen"] == "Favoritos.aspx")
+            {
+                btnDetalleVolver.Text = "← Volver a favoritos";
+            }
+            else
+            {
+                btnDetalleVolver.Text = "← Volver al catálogo";
+            }
         }
 
         protected void btnDetalleVolver_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Default.aspx");
+            if ((string)Session["Origen"] == "Favoritos.aspx")
+            {
+                Response.Redirect("Favoritos.aspx");
+            }
+            else
+            {
+                Response.Redirect("Detalle.aspx");
+            }
         }
     }
 }

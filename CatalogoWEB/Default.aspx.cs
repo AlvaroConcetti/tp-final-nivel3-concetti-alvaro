@@ -14,8 +14,30 @@ namespace CatalogoWEB
     {
         ConsultasCatalogo catalogo = new ConsultasCatalogo();
 
+
+        // Esto lo hizo claude code
+        private List<int> _idsFavoritos = new List<int>();
+        // Esto lo hizo claude code
+        protected bool EsFavorito(int articuloId)
+        {
+            return _idsFavoritos.Contains(articuloId);
+        }
+        // Esto lo hizo claude code
+        private void CargarFavoritos()
+        {
+            if (Seguridad.SesionActiva(Session["Usuario"]))
+            {
+                Usuario u = (Usuario)Session["Usuario"];
+                _idsFavoritos = catalogo.ListarFavoritos(u.Id)
+                                        .Select(a => a.Id)
+                                        .ToList();
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            CargarFavoritos();
+
             if (!IsPostBack)
             {
                 List<Articulo> listaOriginal = catalogo.ListarArticulo();
@@ -47,13 +69,9 @@ namespace CatalogoWEB
 
             if (lista != null)
             {
-                // 4. Buscamos el bicho en la lista que recuperamos
                 Articulo seleccionado = lista.Find(x => x.Id == articuloId);
-
-                // 5. Lo guardamos para la siguiente página
                 Session.Add("ArticuloSeleccionado", seleccionado);
-
-                // 6. Redigimos a la pantalla de detalle
+                Session.Add("Origen", "Default.aspx");
                 Response.Redirect("Detalle.aspx", false);
             }
             else
@@ -63,5 +81,42 @@ namespace CatalogoWEB
             }
         }
 
+        protected void repRepetidor_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "AddFavorito")
+            {
+                if (!Seguridad.SesionActiva(Session["Usuario"]))
+                {
+                    Session.Add("Error", "Debes estar logueado para añadir un articulo a Favoritos.");
+                    Response.Redirect("Error.aspx");
+                }
+
+                try
+                {
+                    Usuario usuarioLogueado = (Usuario)Session["Usuario"];
+                    int idUsuario = usuarioLogueado.Id;
+                    int idArticuloFavorito = int.Parse(e.CommandArgument.ToString());
+
+                    ConsultasArticulo consultasArticulo = new ConsultasArticulo();
+
+                    // Toggle: si ya es favorito lo saca, si no lo agrega
+                    if (_idsFavoritos.Contains(idArticuloFavorito))
+                        catalogo.EliminarFavorito(idUsuario, idArticuloFavorito);
+                    else
+                        consultasArticulo.AgregarArticuloFavorito(idUsuario, idArticuloFavorito);
+
+                    // Recargar favoritos y rebindear para actualizar el corazón
+                    CargarFavoritos();
+                    List<Articulo> lista = (List<Articulo>)Session["ListaEnSession"];
+                    repRepetidor.DataSource = lista ?? catalogo.ListarArticulo();
+                    repRepetidor.DataBind();
+                }
+                catch (Exception ex)
+                {
+                    Session.Add("Error", ex);
+                    Response.Redirect("Error.aspx", false);
+                }
+            }
+        }
     }
 }

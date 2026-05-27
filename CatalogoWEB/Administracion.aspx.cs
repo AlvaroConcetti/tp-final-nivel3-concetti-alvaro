@@ -14,11 +14,11 @@ namespace CatalogoWEB
         ConsultasCatalogo consultasCatalogo = new ConsultasCatalogo();
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Seguridad.Admin(Session["Usuario"]) == false)
-            //{
-            //    Session.Add("Error", "No tienes permisos para ingresar aqui.");
-            //    Response.Redirect("Error.aspx", false);
-            //}
+            if (Seguridad.Admin(Session["Usuario"]) == false)
+            {
+                Session.Add("Error", "No tienes permisos para ingresar aqui.");
+                Response.Redirect("Error.aspx", false);
+            }
 
             FiltroAvanzado = chBoxFiltroAvanzado.Checked;
             ddlCriterio.Enabled = true;
@@ -82,11 +82,9 @@ namespace CatalogoWEB
         {
             dgvArticulos.DataSource = Session["ListaEnSession"];
             dgvArticulos.DataBind();
-            ddlFiltrar.ClearSelection();
-            ddlCriterio.ClearSelection();
-            ddlMarca.ClearSelection();
-            ddlCategoria.ClearSelection();
+            ddlFiltrar.SelectedIndex = 0;
             txtBoxFiltrarAvanzado.Text = "";
+            ddlFiltrar_SelectedIndexChanged(null, EventArgs.Empty);
         }
 
         protected void txtBoxFiltrar_TextChanged(object sender, EventArgs e)

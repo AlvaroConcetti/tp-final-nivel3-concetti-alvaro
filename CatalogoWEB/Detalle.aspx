@@ -9,23 +9,16 @@
             OnClick="btnDetalleVolver_Click" CssClass="btn-ghost" Style="padding-left: 0;" />
     </div>
 
+    <% if (ArticuloSeleccionado != null)
+        { %>
+
     <div class="row g-5" style="max-width: 860px;">
         <div class="col-md-5">
             <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border);">
-                <% if (ArticuloSeleccionado != null)
-                    {%>
                 <img src='<%= string.IsNullOrEmpty(ArticuloSeleccionado.UrlImagen) ? "" : ResolveUrl(ArticuloSeleccionado.UrlImagen) %>'
                     alt='<%= ArticuloSeleccionado.Nombre %>'
                     style="width: 100%; aspect-ratio: 1; object-fit: cover; display: block;"
                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22300%22%3E%3Crect width=%22400%22 height=%22300%22 fill=%22%23edeae3%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%23a09d97%22%3ESin imagen%3C/text%3E%3C/svg%3E';" />
-                <%}
-                else
-                {%>
-                <div class="alert alert-danger">
-                    <h2>No se seleccionó ningún artículo para mostrar.</h2>
-                    <a href="Default.aspx" class="btn btn-primary">Volver</a>
-                </div>
-                <%}%>
             </div>
         </div>
         <div class="col-md-7 d-flex flex-column justify-content-center">
@@ -42,4 +35,14 @@
         </div>
     </div>
 
+    <% }
+    else
+    { %>
+
+    <div class="alert alert-danger">
+        <h2>No se seleccionó ningún artículo para mostrar.</h2>
+        <a href="Default.aspx" class="btn btn-primary">Volver</a>
+    </div>
+
+    <% } %>
 </asp:Content>

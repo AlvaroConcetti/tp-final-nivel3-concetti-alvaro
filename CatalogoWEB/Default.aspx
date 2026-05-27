@@ -1,7 +1,8 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CatalogoWEB.Default" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CatalogoWEB.Default" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager runat="server" />
 
@@ -21,7 +22,8 @@
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
-                <asp:Repeater runat="server" ID="repRepetidor">
+
+                <asp:Repeater runat="server" ID="repRepetidor" OnItemCommand="repRepetidor_ItemCommand">
                     <ItemTemplate>
                         <div class="col">
                             <div class="catalog-card h-100">
@@ -29,13 +31,21 @@
                                 <div class="catalog-card-body">
                                     <p class="catalog-card-title"><%#Eval("Nombre")%></p>
                                     <p class="catalog-card-desc"><%#Eval("Descripcion")%></p>
-                                    <p style="font-size:14px; font-weight:600; color:var(--text-primary); margin:0 0 0.85rem;">$<%#Eval("Precio")%></p>
+                                    <p style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 0 0 0.85rem;">$<%#Eval("Precio")%></p>
                                     <asp:Button ID="btnDetalle" Text="Ver detalle →" runat="server"
                                         OnClick="btnDetalle_Click"
                                         CommandArgument='<%#Eval("Id")%>'
                                         CommandName="ArticuloId"
                                         CssClass="btn-outline"
-                                        style="width:100%;" />
+                                        Style="width: 100%;" />
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <asp:LinkButton ID="btnFavorito" runat="server"
+                                            CommandArgument='<%# Eval("Id") %>'
+                                            CommandName="AddFavorito"
+                                            CssClass="btnFavorito">
+                                            <i class='<%# EsFavorito((int)Eval("Id")) ? "bi bi-heart-fill fav-activo" : "bi bi-heart" %>'></i>
+                                        </asp:LinkButton>
+                                    </div>
                                 </div>
                             </div>
                         </div>

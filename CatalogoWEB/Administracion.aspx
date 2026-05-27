@@ -77,6 +77,7 @@
 
             <%-- Tabla de articulos --%>
             <div class="panel">
+                <div class="panel-scroll">
                 <asp:GridView runat="server" ID="dgvArticulos" CssClass="table"
                     AutoGenerateColumns="false"
                     OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged"
@@ -94,6 +95,7 @@
                         <asp:CommandField HeaderText="" ShowSelectButton="true" SelectText="Editar" ControlStyle-CssClass="btn-select" />
                     </Columns>
                 </asp:GridView>
+                </div>
             </div>
 
         </ContentTemplate>

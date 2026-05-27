@@ -28,8 +28,6 @@ namespace CatalogoWEB
                 if (!Page.IsValid)
                     return;
 
-                usuario.Email = txtBoxEmail.Text;
-                usuario.Contrasena = txtBoxContrasena.Text;
 
                 if (Validacion.ValidarVacio(txtBoxEmail))
                 {
@@ -55,6 +53,9 @@ namespace CatalogoWEB
                     return;
                 }
 
+                usuario.Email = txtBoxEmail.Text;
+                usuario.Contrasena = txtBoxContrasena.Text;
+
                 if (Consultas.Login(usuario))
                 {
                     Session.Add("Usuario", usuario);
@@ -68,7 +69,7 @@ namespace CatalogoWEB
             catch (Exception ex)
             {
                 Session.Add("Error", ex.ToString());
-                Response.Redirect("Default.aspx", false);
+                Response.Redirect("Error.aspx", false);
             }
         }
     }

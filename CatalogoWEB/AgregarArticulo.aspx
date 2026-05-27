@@ -24,9 +24,10 @@
 
             <div class="mb-3">
                 <label class="form-label">Precio</label>
-                <asp:TextBox ID="txtBoxPrecio" runat="server" CssClass="form-control" placeholder="0.00" />
+                <asp:TextBox ID="txtBoxPrecio" runat="server" CssClass="form-control" placeholder="0.00"/>
                 <asp:RequiredFieldValidator ErrorMessage="El precio es obligatorio."
-                    ControlToValidate="txtBoxPrecio" runat="server" CssClass="validation-error" />
+                    ControlToValidate="txtBoxPrecio" runat="server" CssClass="validation-error" Display="Dynamic"/>
+                <asp:RegularExpressionValidator ErrorMessage="Formato inválido. Use solo coma para los decimales (ej: 120,50)" ControlToValidate="txtBoxPrecio" runat="server" ValidationExpression="^\d+(,\d{1,2})?$" CssClass="validation-error" Display="Dynamic" />
             </div>
 
             <div class="mb-3">
@@ -59,7 +60,7 @@
                     Text="Cancelar" CssClass="btn-secondary" CausesValidation="false" />
                 <asp:Button ID="btnEliminar" runat="server" OnClick="btnEliminar_Click"
                     Text="Eliminar" CssClass="btn-danger-soft"
-                    OnClientClick="return confirm('¿Estás seguro que querés eliminar este artículo? Esta acción no se puede deshacer.');"/>
+                    OnClientClick="return confirm('¿Estás seguro que querés eliminar este artículo? Esta acción no se puede deshacer.');" />
             </div>
 
         </div>

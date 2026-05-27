@@ -92,5 +92,27 @@ namespace Consultas
                 datos.cerrarConexion();
             }
         }
+        public void AgregarArticuloFavorito(int idUser, int idArticulo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearProcedimiento("AgregarFavoritoSP");
+
+                datos.setearParametro("@IdUser", idUser);
+                datos.setearParametro("@IdArticulo", idArticulo);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
