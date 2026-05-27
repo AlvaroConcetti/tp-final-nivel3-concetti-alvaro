@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Administracion.aspx" />
     <Content Include="AgregarArticulo.aspx" />
+    <Content Include="bdd-catalogoweb\Catalogo_Completo.sql" />
     <Content Include="Content\catalogo.css" />
     <Content Include="Default.aspx" />
     <Content Include="Detalle.aspx" />
