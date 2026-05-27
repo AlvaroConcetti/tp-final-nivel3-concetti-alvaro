@@ -59,8 +59,8 @@
                 <asp:Button ID="btnCancelar" OnClick="btnCancelar_Click" runat="server"
                     Text="Cancelar" CssClass="btn-secondary" CausesValidation="false" />
                 <asp:Button ID="btnEliminar" runat="server" OnClick="btnEliminar_Click"
-                    Text="Eliminar" CssClass="btn-danger-soft"
-                    OnClientClick="return confirm('¿Estás seguro que querés eliminar este artículo? Esta acción no se puede deshacer.');" />
+                    Text="Eliminar" CssClass="btn-danger-soft" Visible="false"
+                    OnClientClick="return confirm('¿Estás seguro que querés eliminar este artículo? Esta acción NO se puede deshacer.');" />
             </div>
 
         </div>

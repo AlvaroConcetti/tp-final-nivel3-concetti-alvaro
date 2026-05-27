@@ -141,11 +141,41 @@ namespace CatalogoWEB
             Response.Redirect("Administracion.aspx", false);
         }
 
+        //protected void btnEliminar_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+
+        //        int idArticulo = int.Parse(Request.QueryString["id"]);
+        //        consultasArticulo.EliminarArticulo(idArticulo);
+        //        Response.Redirect("Administracion.aspx", false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Session.Add("Error", ex);
+        //        Response.Redirect("Error.aspx", false);
+        //    }
+        //}
+
+        // Lo hice con claude code para poder borrar las imagenes de la carpeta Images.
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
             try
             {
                 int idArticulo = int.Parse(Request.QueryString["id"]);
+                List<Articulo> lista = consultasCatalogo.ListarArticulo();
+                Articulo articuloABorrar = lista.Find(x => x.Id == idArticulo);
+
+                if (articuloABorrar != null && !string.IsNullOrEmpty(articuloABorrar.UrlImagen))
+                {
+                    string rutaFisica = Server.MapPath("~/" + articuloABorrar.UrlImagen);
+
+                    if (System.IO.File.Exists(rutaFisica))
+                    {
+                        System.IO.File.Delete(rutaFisica);
+                    }
+                }
+
                 consultasArticulo.EliminarArticulo(idArticulo);
                 Response.Redirect("Administracion.aspx", false);
             }
